@@ -1,3 +1,5 @@
+
+
 def solution(prices):
     answer = []
 
@@ -36,7 +38,28 @@ def solution2(prices):
 
     return answer
 
+def solution3(prices):
+    answer = [0] *len(prices)
 
+    for i in range(len(prices)):
+        for x in prices[i+1:]:
+            answer[i] += 1
+            if x < prices[i]:
+                break
 
-prices = list(map(int, input().split()))
-print(solution2(prices))
+    return answer
+
+def solution4(prices):
+    answer = [0] *len(prices)
+
+    for i in range(len(prices)):
+        for j in range(i+1, len(prices)):
+            answer[i] += 1
+            if prices[j] < prices[i]:
+                break
+
+    return answer
+
+prices = [1,2,3,2,3]
+# prices = list(map(int, input().split()))
+print(solution4(prices))
