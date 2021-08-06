@@ -1,9 +1,10 @@
+# https://programmers.co.kr/learn/courses/30/lessons/42576 (완주하지 못한 선수)
+
 def solution1(participant, completion):
     answer = ''
 
     for _,v in enumerate(completion):
-        if v in completion:
-            participant.remove(v)
+        participant.remove(v)
 
     answer = participant[0]
 
@@ -69,6 +70,49 @@ def solution(participant, completion):
     return answer
 
 
+"""
+
+A A C D
+
+A C D
+
+
+"""
+
+
+
 participant = ["mislav", "stanko", "mislav", "ana"]
 completion = ["stanko", "ana", "mislav"]
 print(solution(participant, completion))
+
+# --------------- other solutions --------------------
+
+
+import collections
+
+
+def solution4(participant, completion):
+    answer = collections.Counter(participant) - collections.Counter(completion)
+    return list(answer.keys())[0]
+
+
+def solution5(participant, completion):
+    answer = ''
+    temp = 0
+    dic = {}
+    for part in participant:
+        dic[hash(part)] = part
+        temp += int(hash(part))
+    for com in completion:
+        temp -= hash(com)
+    answer = dic[temp]
+
+    return answer
+
+def solution6(participant, completion):
+    participant.sort()
+    completion.sort()
+    for p, c in zip(participant, completion):
+        if p != c:
+            return p
+    return participant[-1]
