@@ -1,21 +1,36 @@
+# https://programmers.co.kr/learn/courses/30/lessons/42578 위장
+
 from itertools import combinations
+
+"""
+상의 : (빨,노, 안입는 경우) 하의 : (청바지, 안입는 경우) 
+
+(빨 상의 + 바지를 안입는 경우)
+(노 상의 + 바지를 안입는 경우)
+(청바지 + 상의를 안입는 경우)
+(빨 상의 + 청바지)
+(노 상의 + 청바지)
+
+(2+1)*(1+1) - 1
+옷추가 + 안입는 경우 = 2
+"""
 
 def solution(clothes):
     answer = 1
     clothes_dic = {}
-    for cloth, name in clothes:
+    for _, name in clothes:
         if name in clothes_dic.keys():
             clothes_dic[name] += 1
         else:
             clothes_dic[name] = 2
 
     nums = list(clothes_dic.values())
-
-    print(nums)
+    
     for x in nums:
         answer *= x
 
     return (answer-1)
+
 
 def solution1(clothes):
     answer = 0
@@ -45,3 +60,16 @@ def solution1(clothes):
 clothes = [["yellowhat", "headgear"], ["bluesunglasses", "eyewear"], ["green_turban", "headgear"]]
 clothes2 = 	[["crow_mask", "face"], ["blue_sunglasses", "face"], ["smoky_makeup", "face"]]
 print(solution(clothes2))
+
+
+
+# ----- 다른 사람 풀이 ---------
+
+from collections import Counter
+from functools import reduce
+
+def solution(clothes):
+
+    cnt = Counter([kind for name, kind in clothes])
+    answer = reduce(lambda x, y: x*(y+1), cnt.values(), 1) - 1
+    return answer
